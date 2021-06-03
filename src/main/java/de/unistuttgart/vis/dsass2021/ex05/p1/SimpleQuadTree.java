@@ -68,8 +68,7 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
         int height;
 
         for (T element : elements) {
-            System.out.println("hll");
-            /*if (element.getPosition().getXValue() < xMinRectangle) {
+            if (element.getPosition().getXValue() < xMinRectangle) {
                 xMinRectangle = (int) element.getPosition().getXValue();
             }
             if (element.getPosition().getYValue() < yMinRectangle) {
@@ -80,7 +79,7 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
             }
             if (element.getPosition().getYValue() > yMaxRectangle) {
                 yMaxRectangle = (int) element.getPosition().getYValue();
-            }*/
+            }
         }
         width = xMaxRectangle - xMinRectangle;
         height = yMaxRectangle - yMinRectangle;

@@ -3,7 +3,7 @@ package de.unistuttgart.vis.dsass2021.ex05.p1;
 /**
  * This class represents an two-dimensional point
  */
-public class Point {
+public class Point implements QuadTreeElement {
 
     private static int counter = 0;
 
@@ -38,5 +38,10 @@ public class Point {
     @Override
     public String toString() {
         return Integer.toString(id);
+    }
+
+    @Override
+    public Point getPosition() {
+        return this;
     }
 }
