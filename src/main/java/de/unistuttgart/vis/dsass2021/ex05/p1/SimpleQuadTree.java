@@ -110,7 +110,7 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
                 size++;
             }
         }
-        if (size > 1) {
+        if (size > maxLeafElements) {
             createSubTree(list, bigBox);
         }
     }
