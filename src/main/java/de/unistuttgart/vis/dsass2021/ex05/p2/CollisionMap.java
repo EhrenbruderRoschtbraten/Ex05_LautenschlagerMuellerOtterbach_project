@@ -29,9 +29,9 @@ public class CollisionMap {
      * A two-dimensional array of {@link java.util.List} serves as the data
      * structure for storing the rectangles. Each element of the array holds a list
      * of rectangles. At the same time, each element of the array is associated with
-     * an area of the bounding rectangle {@link CollisionMap.gridRectangle} through
-     * the transform methods ({@link CollisionMap.transformX} and
-     * {@link CollisionMap.transformY}. These areas are called cells.
+     * an area of the bounding rectangle {@link //CollisionMap.gridRectangle} through
+     * the transform methods ({@link //CollisionMap.transformX} and
+     * {@link //CollisionMap.transformY}. These areas are called cells.
      */
     private List<Rectangle>[][] map;
 
@@ -39,7 +39,7 @@ public class CollisionMap {
      * Creates a {@link CollisionMap} from a set of rectangles.
      * 
      * @param rectangles that are placed in the collision map
-     * @throws CollisionMapException
+     * @throws //CollisionMapException
      */
     public CollisionMap(final Set<Rectangle> rectangles) throws IllegalArgumentException {
         this(rectangles, GRID_RESOLUTION_X, GRID_RESOLUTION_Y);
@@ -95,6 +95,7 @@ public class CollisionMap {
      */
     private Set<Rectangle> getCollisionCandidates(final Rectangle rectangle) throws CollisionMapOutOfBoundsException {
         // TODO Insert code for assignment 5.2.b
+        return null;
     }
 
    
@@ -144,6 +145,7 @@ public class CollisionMap {
      */
     public boolean collide(final Rectangle rectangle) {
         // TODO Insert code for assignment 5.2.c
+        return true;
     }
 
     /**
