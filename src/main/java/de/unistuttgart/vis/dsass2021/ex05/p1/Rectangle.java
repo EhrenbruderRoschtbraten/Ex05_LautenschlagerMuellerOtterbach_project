@@ -167,8 +167,24 @@ public class Rectangle {
      * 
      */
     public Rectangle excludePoints(final Collection<Point> points) {
-        // TODO Insert code for assignment 5.1.a
-
+        int newWidth = (int) this.width;
+        int newHeight = (int) this.height;
+        for (Point point : points) {
+            if ((this.x < point.getXValue() - 1) && (point.getXValue() - this.x < newWidth) && (this.y + this.height > point.getYValue())) {
+                newWidth = (int) (point.getXValue() - this.x);
+            } else if ((this.y < point.getYValue() - 1) && (point.getYValue() - this.y < newHeight) && (this.x + this.width > point.getXValue())) {
+                newHeight = (int) (point.getYValue() - this.y);
+            }
+        }
+        if (newWidth == (int) this.width && newHeight == (int) this.height) {
+            return this;
+        } else if (newWidth == (int) this.width && newHeight != (int) this.height) {
+            return new Rectangle(this.x, this.y, newWidth, newHeight - 1);
+        } else if (newWidth != (int) this.width && newHeight == (int) this.height) {
+            return new Rectangle(this.x, this.y, newWidth - 1, newHeight);
+        } else {
+            return new Rectangle(this.x, this.y, newWidth - 1, newHeight - 1);
+        }
     }
 
 }

@@ -60,7 +60,31 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * @return a bounding box in type Rectangle
      */
     private Rectangle computeBoundingBox(final List<T> elements) {
-        // TODO Insert code for assignment 5.1.b
+        int xMinRectangle = 1000000;
+        int yMinRectangle = 1000000;
+        int xMaxRectangle = 0;
+        int yMaxRectangle = 0;
+        int width;
+        int height;
+
+        for (T element : elements) {
+            System.out.println("hll");
+            /*if (element.getPosition().getXValue() < xMinRectangle) {
+                xMinRectangle = (int) element.getPosition().getXValue();
+            }
+            if (element.getPosition().getYValue() < yMinRectangle) {
+                yMinRectangle = (int) element.getPosition().getYValue();
+            }
+            if (element.getPosition().getXValue() > xMaxRectangle) {
+                xMaxRectangle = (int) element.getPosition().getXValue();
+            }
+            if (element.getPosition().getYValue() > yMaxRectangle) {
+                yMaxRectangle = (int) element.getPosition().getYValue();
+            }*/
+        }
+        width = xMaxRectangle - xMinRectangle;
+        height = yMaxRectangle - yMinRectangle;
+        return new Rectangle(xMinRectangle, yMinRectangle, width, height);
     }
 
     /**
@@ -79,7 +103,16 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * @throws IllegalArgumentException, when parameter is missing.
      */
     void createQuadTree(final List<T> list) throws IllegalArgumentException {
-        // TODO Insert code for assignment 5.1.c
+        Rectangle bigBox = computeBoundingBox(list);
+        int size = 0;
+        for (T element : list) {
+            if (bigBox.containsPoint((Point) element)) {
+                size++;
+            }
+        }
+        if (size > 1) {
+            createSubTree(list, bigBox);
+        }
     }
 
     /**
