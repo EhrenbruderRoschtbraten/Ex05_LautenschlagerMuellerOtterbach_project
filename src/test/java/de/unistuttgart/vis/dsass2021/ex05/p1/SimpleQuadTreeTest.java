@@ -47,7 +47,5 @@ public class SimpleQuadTreeTest {
             System.out.print(element.getXValue() + " / ");
             System.out.println(element.getYValue());
         }
-
-
     }
 }
