@@ -26,9 +26,5 @@ public class RectangleTest {
 
 		assertEquals(49, (int) r1.excludePoints(pointlist).getWidth());
 		assertEquals(100, (int) r1.excludePoints(pointlist).getHeight());
-		System.out.println(r1.excludePoints(pointlist).getX());
-		System.out.println(r1.excludePoints(pointlist).getY());
-		System.out.println(r1.excludePoints(pointlist).getWidth());
-		System.out.println(r1.excludePoints(pointlist).getHeight());
 	}
 }
