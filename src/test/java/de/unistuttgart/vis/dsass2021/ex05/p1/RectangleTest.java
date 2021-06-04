@@ -20,14 +20,15 @@ public class RectangleTest {
 		ArrayList<Point> pointlist = new ArrayList<>();
 		Point pointOne = new Point(180, 150);
 		Point pointTwo = new Point(150, 180);
-		Point pointThree = new Point(101, 150);
-		Point pointFour = new Point(101, 149);
 
 		pointlist.add(pointOne);
 		pointlist.add(pointTwo);
-		// pointlist.add(pointThree);
-		// pointlist.add(pointFour);
-		assertEquals(79, (int) r1.excludePoints(pointlist).getWidth());
-		assertEquals(79, (int) r1.excludePoints(pointlist).getHeight());
+
+		assertEquals(49, (int) r1.excludePoints(pointlist).getWidth());
+		assertEquals(100, (int) r1.excludePoints(pointlist).getHeight());
+		System.out.println(r1.excludePoints(pointlist).getX());
+		System.out.println(r1.excludePoints(pointlist).getY());
+		System.out.println(r1.excludePoints(pointlist).getWidth());
+		System.out.println(r1.excludePoints(pointlist).getHeight());
 	}
 }
