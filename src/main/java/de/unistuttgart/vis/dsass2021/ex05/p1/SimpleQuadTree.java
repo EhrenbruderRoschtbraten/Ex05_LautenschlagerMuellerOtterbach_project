@@ -109,8 +109,10 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
             topRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
             bottomRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
         }
-        this.leafElements = new LinkedList<>();
-        this.leafElements.addAll(list);
+        if (list.size() == maxLeafElements) {
+            this.leafElements = new LinkedList<>();
+            this.leafElements.addAll(list);
+        }
     }
 
     /**
@@ -154,8 +156,38 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      */
     @Override
     public void rangeQuery(final List<T> resultList, final Rectangle query) {
-        if (this.getBoundingBox().intersects(query)) {
-            
+        if ((this.getBoundingBox().getX() >= query.getX()) && (this.getBoundingBox().getY() >= query.getY()) && (this.boundingBox.getX() + this.getBoundingBox().getWidth() <= query.getX() * query.getWidth()) && (this.boundingBox.getY() + this.getBoundingBox().getHeight() <= query.getY() * query.getHeight())) {
+            if (leafElements != null) {
+                resultList.addAll(leafElements);
+            }
+        } else if (this.leafElements != null) {
+            for (int i = 0; i < maxLeafElements; i++) {
+                if (query.containsPoint((Point) this.leafElements.get(i))) {
+                    resultList.add(this.leafElements.get(i));
+                }
+            }
         }
+
+        if (this.topLeft != null) {
+            if (query.intersects(this.topLeft.getBoundingBox())) {
+                this.topLeft.rangeQuery(resultList, query);
+            }
+        }
+        if (this.topRight != null) {
+            if (query.intersects(this.topRight.getBoundingBox())) {
+                this.topRight.rangeQuery(resultList, query);
+            }
+        }
+        if (this.bottomLeft != null) {
+            if (query.intersects(this.bottomLeft.getBoundingBox())) {
+                this.bottomLeft.rangeQuery(resultList, query);
+            }
+        }
+        if (this.bottomRight != null) {
+            if (query.intersects(this.bottomRight.getBoundingBox())) {
+                this.bottomRight.rangeQuery(resultList, query);
+            }
+        }
+
     }
 }
