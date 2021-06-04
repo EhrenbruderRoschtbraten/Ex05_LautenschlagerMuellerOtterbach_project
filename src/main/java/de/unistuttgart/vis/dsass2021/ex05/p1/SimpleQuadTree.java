@@ -68,7 +68,6 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
         int height;
 
         for (T element : elements) {
-            System.out.println("hll");
             if (element.getPosition().getXValue() < xMinRectangle) {
                 xMinRectangle = (int) element.getPosition().getXValue();
             }
