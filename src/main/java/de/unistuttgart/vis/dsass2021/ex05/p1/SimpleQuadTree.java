@@ -60,10 +60,10 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * @return a bounding box in type Rectangle
      */
     private Rectangle computeBoundingBox(final List<T> elements) {
-        int xMinRectangle = 1000000;
-        int yMinRectangle = 1000000;
-        int xMaxRectangle = 0;
-        int yMaxRectangle = 0;
+        int xMinRectangle = (int) elements.get(0).getPosition().getXValue();
+        int yMinRectangle = (int) elements.get(0).getPosition().getYValue();
+        int xMaxRectangle = (int) elements.get(0).getPosition().getXValue();
+        int yMaxRectangle = (int) elements.get(0).getPosition().getYValue();
         int width;
         int height;
 
