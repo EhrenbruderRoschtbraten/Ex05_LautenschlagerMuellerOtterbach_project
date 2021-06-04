@@ -1,5 +1,6 @@
 package de.unistuttgart.vis.dsass2021.ex05.p1;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -102,15 +103,11 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * @throws IllegalArgumentException, when parameter is missing.
      */
     void createQuadTree(final List<T> list) throws IllegalArgumentException {
-        Rectangle bigBox = computeBoundingBox(list);
-        int size = 0;
-        for (T element : list) {
-            if (bigBox.containsPoint((Point) element)) {
-                size++;
-            }
-        }
-        if (size > maxLeafElements) {
-            createSubTree(list, bigBox);
+        if (list.size() > maxLeafElements) {
+            createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
         }
     }
 
@@ -118,10 +115,10 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * Creates a sub QuadTree with the elements contained in the bounding box.
      * The QuadTree is empty if no elements are contained in the bounding box.
      *
-     * @param allElements   all elements of the parent node
-     *                      (must be != null, must not contain null)
-     * @param boundingBox   the boundingBox to check if an element should be
-     *                      inserted into the sub QuadTree (must be != null)
+     * @param allElements all elements of the parent node
+     *                    (must be != null, must not contain null)
+     * @param boundingBox the boundingBox to check if an element should be
+     *                    inserted into the sub QuadTree (must be != null)
      * @return the SimpleQuadTree that contains all elements within the bounding box
      */
     private SimpleQuadTree<T> createSubTree(final List<T> allElements, final Rectangle boundingBox) {
@@ -155,6 +152,8 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      */
     @Override
     public void rangeQuery(final List<T> resultList, final Rectangle query) {
-        // TODO Insert code for assignment 5.1.d
+        if(this.getBoundingBox().intersects(query)){
+
+        }
     }
 }
