@@ -109,6 +109,7 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
             topRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
             bottomRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
         }
+        this.leafElements = new LinkedList<>();
         this.leafElements.addAll(list);
     }
 
@@ -154,7 +155,7 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
     @Override
     public void rangeQuery(final List<T> resultList, final Rectangle query) {
         if (this.getBoundingBox().intersects(query)) {
-
+            
         }
     }
 }

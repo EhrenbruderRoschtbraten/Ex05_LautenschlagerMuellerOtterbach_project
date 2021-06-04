@@ -39,7 +39,7 @@ public class SimpleQuadTreeTest {
 
 
         SimpleQuadTree quadTree = new SimpleQuadTree(elementList,1);
-        System.out.println(quadTree.topLeft.leafElements.size());
+        System.out.println(quadTree.bottomRight.leafElements.size());
 
 
     }
