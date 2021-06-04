@@ -104,11 +104,12 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      */
     void createQuadTree(final List<T> list) throws IllegalArgumentException {
         if (list.size() > maxLeafElements) {
-            createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
-            createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
-            createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
-            createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            topLeft = createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            bottomLeft = createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            topRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
+            bottomRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
         }
+        this.leafElements.addAll(list);
     }
 
     /**
@@ -152,7 +153,7 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      */
     @Override
     public void rangeQuery(final List<T> resultList, final Rectangle query) {
-        if(this.getBoundingBox().intersects(query)){
+        if (this.getBoundingBox().intersects(query)) {
 
         }
     }
