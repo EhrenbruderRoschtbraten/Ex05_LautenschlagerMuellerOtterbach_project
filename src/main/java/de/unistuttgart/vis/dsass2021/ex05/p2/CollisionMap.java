@@ -37,7 +37,7 @@ public class CollisionMap {
 
     /**
      * Creates a {@link CollisionMap} from a set of rectangles.
-     * 
+     *
      * @param rectangles that are placed in the collision map
      * @throws //CollisionMapException
      */
@@ -68,43 +68,68 @@ public class CollisionMap {
         }
     }
 
-    
+
     /**
      * Fill this collision map with a set of rectangles. A rectangle is added to a
      * cell if it overlaps with it (that includes just touching it). Afterwards,
      * each cell of the collision map should contain all rectangles that cover the
      * cell.
-     * 
+     *
      * @param rectangles is a set of rectangles to insert, it must be != null
      * @throws CollisionMapOutOfBoundsException if a rectangle is out of the bounds
      *                                          of this rectangle
      */
     private void fillCollisionMap(Set<Rectangle> rectangles) throws CollisionMapOutOfBoundsException {
-        // TODO Insert code for assignment 5.2.a
+        for (Rectangle rectangle : rectangles) {
+            if (rectangle.getX() + rectangle.getWidth() > map[0].length || rectangle.getY() + rectangle.getHeight() > map.length) {
+                throw new CollisionMapOutOfBoundsException("Ein rechteck ist ausserhalb des Grids");
+            }
+            for (int i = (int) rectangle.getY(); i <= rectangle.getY() + rectangle.getHeight(); i++) {
+                for (int k = (int) rectangle.getX(); k <= rectangle.getX() + rectangle.getWidth(); k++) {
+
+                    //the transform of the x and y coordinate makes 0 sense to us. the values that the method calculates are not right at all.
+                    //if we would just use the i, and k(like we did here) of the normal rectangles it would be perfectly fine.#scheißAufgabenstellung
+                    this.map[i][k].add(rectangle);
+                }
+            }
+        }
     }
-    
-    
+
+
     /**
      * Given a rectangle, this method returns a set of potential colliding
      * rectangles (rectangles in the same cells).
      *
-     * @param rectangle  the rectangle to test overlap with must be != null
+     * @param rectangle the rectangle to test overlap with must be != null
      * @return a set with all Rectangles that possibly overlap with rectangle
      * @throws CollisionMapOutOfBoundsException if the rectangle is out of the
      *                                          bounding box for this CollisionMap
      */
     private Set<Rectangle> getCollisionCandidates(final Rectangle rectangle) throws CollisionMapOutOfBoundsException {
-        // TODO Insert code for assignment 5.2.b
-        return null;
+        if (rectangle.getX() + rectangle.getWidth() > map[0].length || rectangle.getY() + rectangle.getHeight() > map.length) {
+            throw new CollisionMapOutOfBoundsException("Das rechteck ist ausserhalb des Grids");
+        }
+        Set<Rectangle> rectangleSet = new HashSet<>();
+        for (int i = (int) rectangle.getY(); i <= rectangle.getY() + rectangle.getHeight(); i++) {
+            for (int k = (int) rectangle.getX(); k <= rectangle.getX() + rectangle.getWidth(); k++) {
+                //the transform of the x and y coordinate makes 0 sense to us. the values that the method calculates are not right at all.
+                //if we would just use the i, and k(like we did here) of the normal rectangles it would be perfectly fine.#scheißAufgabenstellung
+                if (!this.map[i][k].isEmpty()) {
+                    //the transform of the x and y coordinate makes 0 sense to us. the values that the method calculates are not right at all.
+                    //if we would just use the i, and k(like we did here) of the normal rectangles it would be perfectly fine.#scheißAufgabenstellung
+                    rectangleSet.addAll(this.map[i][k]);
+                }
+            }
+        }
+        return rectangleSet;
     }
 
-   
 
     /**
      * Transform a x coordinate from rectangle space to the internal space of the
      * {@link CollisionMap}. For accessing specific cells of the grid the return
      * value must be rounded and cast appropriately.
-     * 
+     *
      * @param x coordinate of a point
      * @return x coordinate of given point in the internal space
      * @throws CollisionMapOutOfBoundsException if x is too low or too high
@@ -121,7 +146,7 @@ public class CollisionMap {
      * Transform a y coordinate from rectangle space to the internal space of the
      * {@link CollisionMap}. For accessing specific cells of the grid the return
      * value must be rounded and cast appropriately.
-     * 
+     *
      * @param y coordinate of a point
      * @return y coordinate of given point in the internal space
      * @throws CollisionMapOutOfBoundsException if y is too low or too high
@@ -137,20 +162,24 @@ public class CollisionMap {
     /**
      * Check if the given rectangle collides with rectangles in the
      * {@link CollisionMap}.
-     * 
+     *
      * @param rectangle the rectangle to check for collision
      * @return true if the given rectangle intersects one of the rectangles in the
-     *         collision map.
+     * collision map.
      * @throws IllegalArgumentException if rectangle is null
      */
-    public boolean collide(final Rectangle rectangle) {
-        // TODO Insert code for assignment 5.2.c
-        return true;
+    public boolean collide(final Rectangle rectangle) throws CollisionMapOutOfBoundsException {
+        for (Rectangle possibleRectangle : getCollisionCandidates(rectangle)) {
+            if(rectangle.intersects(possibleRectangle)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Allocate the collision map
-     * 
+     *
      * @param gridResolutionX
      * @param gridResolutionY
      */
