@@ -84,8 +84,8 @@ public class CollisionMap {
             if (rectangle.getX() + rectangle.getWidth() > map[0].length || rectangle.getY() + rectangle.getHeight() > map.length) {
                 throw new CollisionMapOutOfBoundsException("Ein rechteck ist ausserhalb des Grids");
             }
-            for (int i = (int) rectangle.getY(); i <= rectangle.getY() + rectangle.getHeight(); i++) {
-                for (int k = (int) rectangle.getX(); k <= rectangle.getX() + rectangle.getWidth(); k++) {
+            for (int i = Math.round(rectangle.getY()); i <= rectangle.getY() + rectangle.getHeight(); i++) {
+                for (int k = Math.round(rectangle.getX()); k <= rectangle.getX() + rectangle.getWidth(); k++) {
 
                     //the transform of the x and y coordinate makes 0 sense to us. the values that the method calculates are not right at all.
                     //if we would just use the i, and k(like we did here) of the normal rectangles it would be perfectly fine.#scheißAufgabenstellung
@@ -170,7 +170,7 @@ public class CollisionMap {
      */
     public boolean collide(final Rectangle rectangle) throws CollisionMapOutOfBoundsException {
         for (Rectangle possibleRectangle : getCollisionCandidates(rectangle)) {
-            if(rectangle.intersects(possibleRectangle)){
+            if (rectangle.intersects(possibleRectangle)) {
                 return true;
             }
         }

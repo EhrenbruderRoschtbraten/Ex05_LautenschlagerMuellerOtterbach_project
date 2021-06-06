@@ -37,6 +37,7 @@ public class SimpleQuadTreeTest {
         SimpleQuadTree quadTree = new SimpleQuadTree(elementList, 1);
         System.out.println();
 
+        //c and after or something
 
         List<Point> list = new LinkedList<>();
         quadTree.rangeQuery(list, new Rectangle(1, 1, 500, 500));
@@ -47,5 +48,6 @@ public class SimpleQuadTreeTest {
             System.out.print(element.getXValue() + " / ");
             System.out.println(element.getYValue());
         }
+
     }
 }

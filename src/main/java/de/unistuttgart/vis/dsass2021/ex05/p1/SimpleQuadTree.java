@@ -1,6 +1,7 @@
 package de.unistuttgart.vis.dsass2021.ex05.p1;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,29 +62,13 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * @return a bounding box in type Rectangle
      */
     private Rectangle computeBoundingBox(final List<T> elements) {
-        int xMinRectangle = (int) elements.get(0).getPosition().getXValue();
-        int yMinRectangle = (int) elements.get(0).getPosition().getYValue();
-        int xMaxRectangle = (int) elements.get(0).getPosition().getXValue();
-        int yMaxRectangle = (int) elements.get(0).getPosition().getYValue();
-        int width;
-        int height;
+        float xMinRectangle = elements.stream().map(QuadTreeElement::getPosition).min(Comparator.comparing(Point::getXValue)).get().getXValue();
+        float yMinRectangle = elements.stream().map(QuadTreeElement::getPosition).min(Comparator.comparing(Point::getYValue)).get().getYValue();
+        float xMaxRectangle = elements.stream().map(QuadTreeElement::getPosition).max(Comparator.comparing(Point::getXValue)).get().getXValue();
+        float yMaxRectangle = elements.stream().map(QuadTreeElement::getPosition).max(Comparator.comparing(Point::getYValue)).get().getYValue();
+        float width = xMaxRectangle - xMinRectangle;
+        float height = yMaxRectangle - yMinRectangle;
 
-        for (T element : elements) {
-            if (element.getPosition().getXValue() < xMinRectangle) {
-                xMinRectangle = (int) element.getPosition().getXValue();
-            }
-            if (element.getPosition().getYValue() < yMinRectangle) {
-                yMinRectangle = (int) element.getPosition().getYValue();
-            }
-            if (element.getPosition().getXValue() > xMaxRectangle) {
-                xMaxRectangle = (int) element.getPosition().getXValue();
-            }
-            if (element.getPosition().getYValue() > yMaxRectangle) {
-                yMaxRectangle = (int) element.getPosition().getYValue();
-            }
-        }
-        width = xMaxRectangle - xMinRectangle;
-        height = yMaxRectangle - yMinRectangle;
         return new Rectangle(xMinRectangle, yMinRectangle, width, height);
     }
 
@@ -103,13 +88,15 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      * @throws IllegalArgumentException, when parameter is missing.
      */
     void createQuadTree(final List<T> list) throws IllegalArgumentException {
+        if (list == null) {
+            throw new IllegalArgumentException("list is null");
+        }
         if (list.size() > maxLeafElements) {
             topLeft = createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
             bottomLeft = createSubTree(list, new Rectangle(this.boundingBox.getX(), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
             topRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY(), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
             bottomRight = createSubTree(list, new Rectangle(this.boundingBox.getX() + (this.boundingBox.getWidth() / 2), this.boundingBox.getY() + (this.boundingBox.getHeight() / 2), this.boundingBox.getWidth() / 2, this.boundingBox.getHeight() / 2));
-        }
-        if (list.size() == maxLeafElements) {
+        } else {
             this.leafElements = new LinkedList<>();
             this.leafElements.addAll(list);
         }
@@ -156,7 +143,9 @@ public class SimpleQuadTree<T extends QuadTreeElement> extends QuadTree<T> {
      */
     @Override
     public void rangeQuery(final List<T> resultList, final Rectangle query) {
-        if ((this.getBoundingBox().getX() >= query.getX()) && (this.getBoundingBox().getY() >= query.getY()) && (this.boundingBox.getX() + this.getBoundingBox().getWidth() <= query.getX() * query.getWidth()) && (this.boundingBox.getY() + this.getBoundingBox().getHeight() <= query.getY() * query.getHeight())) {
+        if ((this.getBoundingBox().getX() >= query.getX()) && (this.getBoundingBox().getY() >= query.getY()) &&
+                (this.boundingBox.getX() + this.getBoundingBox().getWidth() <= query.getX() * query.getWidth()) &&
+                (this.boundingBox.getY() + this.getBoundingBox().getHeight() <= query.getY() * query.getHeight())) {
             if (leafElements != null) {
                 resultList.addAll(leafElements);
             }
